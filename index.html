@@ -43,7 +43,7 @@
             --glow: rgba(2, 132, 199, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s, border-color 0.4s, box-shadow 0.4s; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; transition: background 0.3s, color 0.3s; }
         
         body { 
             background: var(--bg-color); 
@@ -52,7 +52,6 @@
             align-items: center; 
             min-height: 100vh; 
             padding: calc(15px + env(safe-area-inset-top)) 15px calc(15px + env(safe-area-inset-bottom)) 15px;
-            overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -65,91 +64,297 @@
             padding: 30px 25px; 
             border-radius: 28px; 
             border: 1px solid var(--input-border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 1px var(--input-border); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
             position: relative; 
-            animation: containerSpawn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .theme-toggle { position: absolute; top: 20px; right: 25px; background: transparent; border: none; font-size: 22px; cursor: pointer; transition: transform 0.3s ease; }
-        .theme-toggle:hover { transform: rotate(30deg) scale(1.15); }
+        .theme-toggle { position: absolute; top: 20px; right: 25px; background: transparent; border: none; font-size: 22px; cursor: pointer; }
         
-        h1 { color: var(--text-color); font-size: 24px; text-align: center; margin-bottom: 5px; padding-top: 10px; font-weight: 800; letter-spacing: -0.5px; }
-        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 13px; margin-bottom: 15px; font-weight: 500; }
+        h1 { color: var(--text-color); font-size: 22px; text-align: center; margin-bottom: 5px; padding-top: 10px; font-weight: 800; }
+        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 13px; margin-bottom: 15px; }
         
-        .quote-box { background: var(--li-bg); padding: 12px; border-radius: 14px; text-align: center; font-size: 12px; font-style: italic; color: var(--primary); margin-bottom: 20px; font-weight: 600; min-height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--input-border); animation: pulseGlow 4s infinite ease-in-out; }
+        .quote-box { background: var(--li-bg); padding: 12px; border-radius: 14px; text-align: center; font-size: 12px; font-style: italic; color: var(--primary); margin-bottom: 20px; border: 1px solid var(--input-border); }
 
         .dashboard { display: flex; justify-content: space-between; background: var(--li-bg); padding: 14px; border-radius: 18px; margin-bottom: 20px; border: 1px solid var(--input-border); }
-        .dash-item { text-align: center; flex: 1; transform: scale(1); transition: 0.3s; }
-        .dash-item:hover { transform: translateY(-2px); }
+        .dash-item { text-align: center; flex: 1; }
         .dash-item .num { font-size: 18px; font-weight: bold; color: var(--text-color); }
         .dash-item .label { font-size: 10px; color: var(--subtitle-color); text-transform: uppercase; margin-top: 3px; font-weight: 700; }
 
-        .progress-container { background: var(--input-border); border-radius: 10px; height: 10px; width: 100%; margin-bottom: 8px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); }
-        .progress-bar { background: linear-gradient(90deg, var(--primary), var(--success)); height: 100%; width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--success); }
+        .progress-container { background: var(--input-border); border-radius: 10px; height: 10px; width: 100%; margin-bottom: 8px; overflow: hidden; }
+        .progress-bar { background: linear-gradient(90deg, var(--primary), var(--success)); height: 100%; width: 0%; transition: width 0.4s; }
         .progress-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--subtitle-color); margin-bottom: 20px; font-weight: bold; }
-        .clear-btn { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 12px; font-weight: 700; transition: 0.2s; }
-        .clear-btn:hover { opacity: 0.8; transform: scale(1.05); }
+        .clear-btn { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 12px; font-weight: 700; }
 
         .search-box { width: 100%; margin-bottom: 15px; }
         .search-box input { padding: 12px 15px; font-size: 14px; border-radius: 14px; border: 2px dashed var(--input-border); width: 100%; color: var(--li-text); background: transparent; outline: none;}
-        .search-box input:focus { border-color: var(--primary); background: rgba(0,0,0,0.1); }
+        .search-box input:focus { border-color: var(--primary); }
 
         .input-section { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; width: 100%; }
         .row-inputs { display: flex; gap: 8px; flex-wrap: wrap; }
-        .row-inputs select, .row-inputs input[type="date"] { flex: 1; min-width: 100px; padding: 12px; border-radius: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); font-size: 13px; outline: none; font-weight: 600; cursor: pointer; }
-        input[type="text"] { width: 100%; padding: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 14px; font-size: 15px; outline: none; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        input[type="text"]:focus, select:focus, input[type="date"]:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--glow); }
+        .row-inputs select, .row-inputs input[type="date"] { flex: 1; min-width: 100px; padding: 12px; border-radius: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); font-size: 13px; outline: none; }
+        input[type="text"] { width: 100%; padding: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 14px; font-size: 15px; outline: none; }
+        input[type="text"]:focus, select:focus, input[type="date"]:focus { border-color: var(--primary); }
         
         button.primary-btn { 
             background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: white; border: none; padding: 15px; border-radius: 14px; font-size: 15px; cursor: pointer; font-weight: bold; width: 100%;
-            box-shadow: 0 4px 15px var(--glow); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        button.primary-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4); }
-        button.primary-btn:active { transform: translateY(1px) scale(0.98); }
         
         .filter-tabs { display: flex; gap: 6px; margin-bottom: 18px; }
-        .filter-btn { flex: 1; padding: 10px; border: none; background: var(--li-bg); color: var(--subtitle-color); border-radius: 10px; font-size: 12px; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 5px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid transparent; }
-        .filter-btn:hover { background: var(--input-border); color: var(--text-color); }
-        .filter-btn.active { background: var(--primary); color: #0f172a; font-weight: 800; border-color: rgba(255,255,255,0.2); box-shadow: 0 4px 12px var(--glow); }
+        .filter-btn { flex: 1; padding: 10px; border: none; background: var(--li-bg); color: var(--subtitle-color); border-radius: 10px; font-size: 12px; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 5px; }
+        .filter-btn.active { background: var(--primary); color: #0f172a; font-weight: 800; }
         .count-badge { background: rgba(0,0,0,0.15); padding: 2px 6px; border-radius: 20px; font-size: 10px; }
-        [data-theme="dark"] .count-badge { background: rgba(255,255,255,0.1); }
-        .filter-btn.active .count-badge { background: rgba(0,0,0,0.2); color: #0f172a; }
 
-        ul { list-style: none; max-height: 230px; overflow-y: auto; padding-right: 2px; }
-        ul::-webkit-scrollbar { width: 5px; }
-        ul::-webkit-scrollbar-thumb { background: var(--input-border); border-radius: 10px; }
-
-        li { background: var(--li-bg); padding: 15px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); cursor: pointer; position: relative; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, box-shadow 0.3s; animation: itemSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        li:hover { transform: translateX(4px) scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        ul { list-style: none; max-height: 230px; overflow-y: auto; }
+        li { background: var(--li-bg); padding: 15px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); cursor: pointer; }
         
-        li.p-high { border-left-color: var(--danger); animation: pulseHigh 2.5s infinite ease-in-out, itemSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        li.p-high { border-left-color: var(--danger); }
         li.p-medium { border-left-color: #f59e0b; }
         li.p-low { border-left-color: var(--primary); }
-        
-        li.completed { border-left-color: var(--success) !important; background: rgba(16, 185, 129, 0.08); opacity: 0.5; transform: scale(0.98) !important; animation: none !important; }
+        li.completed { border-left-color: var(--success) !important; opacity: 0.5; }
         li.completed .text { text-decoration: line-through; color: var(--subtitle-color); }
         
         .text-group { flex: 1; display: flex; flex-direction: column; gap: 4px; margin-right: 10px; }
-        .text { font-size: 14px; color: var(--li-text); word-break: break-all; font-weight: 500; line-height: 1.4; }
+        .text { font-size: 14px; color: var(--li-text); word-break: break-all; font-weight: 500; }
         .badges { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
-        .badge { font-size: 9px; background: var(--input-border); color: var(--subtitle-color); padding: 2px 7px; border-radius: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
-        .badge.p-tag { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-        .badge.date-tag { background: rgba(56, 189, 248, 0.15); color: var(--primary); }
-        .edit-tip { font-size: 9px; color: var(--subtitle-color); font-style: italic; opacity: 0; transition: opacity 0.2s; }
-        li:hover .edit-tip { opacity: 1; }
+        .badge { font-size: 9px; background: var(--input-border); color: var(--subtitle-color); padding: 2px 7px; border-radius: 6px; font-weight: 700; text-transform: uppercase; }
 
-        button.delete-btn { background: var(--danger); color: white; border: none; padding: 7px 14px; border-radius: 10px; cursor: pointer; font-size: 12px; white-space: nowrap; font-weight: bold; transition: 0.2s; }
-        button.delete-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+        button.delete-btn { background: var(--danger); color: white; border: none; padding: 7px 14px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: bold; }
 
         .backup-section { display: flex; gap: 10px; margin-top: 20px; border-top: 1px solid var(--input-border); padding-top: 15px; justify-content: center; }
-        .backup-btn { background: var(--li-bg); color: var(--subtitle-color); border: 1px solid var(--input-border); padding: 8px 14px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .backup-btn:hover { background: var(--input-border); color: var(--text-color); transform: translateY(-1px); }
+        .backup-btn { background: var(--li-bg); color: var(--subtitle-color); border: 1px solid var(--input-border); padding: 8px 14px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; }
         #fileInput { display: none; }
-        
-        @keyframes containerSpawn { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        @keyframes itemSlideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 0px rgba(56, 189, 248, 0); } 50% { box-shadow: 0 0 12px rgba(56, 189, 248, 0.15); } }
-        @keyframes pulseHigh { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); } 50% { box-shadow: 0 0 12px 3px rgba(239, 68, 68, 0.25); transform: scale(1.01); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); } }
     </style>
-</
+</head>
+<body>
+
+<div class="app-container">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <h1>CWC MAQSADLAR DAFTARI</h1>
+    <p class="subtitle">3-Year Strategic Tracker</p>
+
+    <div class="quote-box" id="quoteBox">"Loading inspiration..."</div>
+
+    <div class="dashboard">
+        <div class="dash-item"><div class="num" id="dash-total">0</div><div class="label">Total</div></div>
+        <div class="dash-item" style="border-left: 1px solid var(--input-border); border-right: 1px solid var(--input-border);"><div class="num" id="dash-active">0</div><div class="label">Active</div></div>
+        <div class="dash-item"><div class="num" id="dash-done">0</div><div class="label">Done</div></div>
+    </div>
+
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-row">
+        <span id="progressText">0% Completed</span>
+        <button class="clear-btn" onclick="clearCompleted()">Clear Done</button>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" oninput="displayGoals()" placeholder="Search goals...">
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="goalInput" placeholder="Add a new strategic goal...">
+        <div class="row-inputs">
+            <select id="categoryInput">
+                <option value="it">IT 💻</option>
+                <option value="ielts">IELTS 📚</option>
+                <option value="personal">Personal 🌱</option>
+            </select>
+            <select id="priorityInput">
+                <option value="low">Priority: Low</option>
+                <option value="medium">Priority: Medium</option>
+                <option value="high">Priority: High 🔥</option>
+            </select>
+            <input type="date" id="dateInput">
+        </div>
+        <button class="primary-btn" onclick="addGoal()">Add to Journey</button>
+    </div>
+
+    <div class="filter-tabs">
+        <button class="filter-btn active" id="tab-all" onclick="filterGoals('all')">All <span class="count-badge" id="cnt-all">0</span></button>
+        <button class="filter-btn" id="tab-it" onclick="filterGoals('it')">IT <span class="count-badge" id="cnt-it">0</span></button>
+        <button class="filter-btn" id="tab-ielts" onclick="filterGoals('ielts')">IELTS <span class="count-badge" id="cnt-ielts">0</span></button>
+    </div>
+
+    <ul id="goalList"></ul>
+
+    <div class="backup-section">
+        <button class="backup-btn" onclick="exportData()">📥 Backup Data</button>
+        <button class="backup-btn" onclick="document.getElementById('fileInput').click()">📤 Restore Data</button>
+        <input type="file" id="fileInput" onchange="importData(event)" accept=".json">
+    </div>
+</div>
+
+<script>
+    let currentFilter = 'all';
+    
+    const quotes = [
+        "Success is a journey, not a destination. Keep coding!",
+        "Your 3-year plan starts with what you do today.",
+        "IELTS 8.0 is not a dream, it is a plan.",
+        "Consistency beats talent. Never stop learning.",
+        "Code your future, design your life."
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        displayGoals();
+        loadTheme();
+        updateQuote();
+    });
+
+    function updateQuote() {
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById("quoteBox").innerText = `"${randomQuote}"`;
+    }
+
+    function getGoalsFromStorage() {
+        try {
+            let goals = localStorage.getItem("nz_goals");
+            return goals ? JSON.parse(goals) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function addGoal() {
+        let input = document.getElementById("goalInput");
+        let categorySelect = document.getElementById("categoryInput");
+        let prioritySelect = document.getElementById("priorityInput");
+        let dateInput = document.getElementById("dateInput");
+        
+        let goalText = input.value.trim();
+        if (goalText === "") return;
+
+        let goals = getGoalsFromStorage();
+        goals.push({ 
+            text: goalText, 
+            completed: false, 
+            category: categorySelect.value, 
+            priority: prioritySelect.value, 
+            date: dateInput.value 
+        });
+        
+        localStorage.setItem("nz_goals", JSON.stringify(goals));
+        input.value = "";
+        dateInput.value = "";
+        displayGoals();
+    }
+
+    function displayGoals() {
+        let list = document.getElementById("goalList");
+        list.innerHTML = "";
+        let goals = getGoalsFromStorage();
+        let searchQuery = document.getElementById("searchInput").value.toLowerCase();
+
+        let total = goals.length;
+        let completedCount = goals.filter(g => g.completed).length;
+        
+        document.getElementById("dash-total").innerText = total;
+        document.getElementById("dash-active").innerText = total - completedCount;
+        document.getElementById("dash-done").innerText = completedCount;
+
+        document.getElementById("cnt-all").innerText = total;
+        document.getElementById("cnt-it").innerText = goals.filter(g => g.category === 'it').length;
+        document.getElementById("cnt-ielts").innerText = goals.filter(g => g.category === 'ielts').length;
+
+        let percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+        document.getElementById("progressBar").style.width = percent + "%";
+        document.getElementById("progressText").innerText = `${percent}% Completed`;
+
+        let filtered = goals.filter(g => {
+            return (currentFilter === 'all' || g.category === currentFilter) && g.text.toLowerCase().includes(searchQuery);
+        });
+
+        filtered.forEach((goal) => {
+            let realIndex = goals.findIndex(g => g.text === goal.text && g.category === goal.category);
+            let li = document.createElement("li");
+            li.classList.add(`p-${goal.priority}`);
+            if (goal.completed) li.classList.add("completed");
+
+            li.setAttribute("onclick", `toggleGoal(${realIndex}, event)`);
+
+            let dateTag = goal.date ? `<span class="badge">📅 ${goal.date}</span>` : '';
+
+            li.innerHTML = `
+                <div class="text-group">
+                    <div class="badges">
+                        <span class="badge">${goal.category}</span>
+                        ${dateTag}
+                    </div>
+                    <span class="text">${goal.text}</span>
+                </div>
+                <button class="delete-btn" onclick="deleteGoal(${realIndex}, event)">Delete</button>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    function toggleGoal(index, event) {
+        if (event.target.tagName === 'BUTTON') return;
+        let goals = getGoalsFromStorage();
+        goals[index].completed = !goals[index].completed;
+        localStorage.setItem("nz_goals", JSON.stringify(goals));
+        displayGoals();
+    }
+
+    function deleteGoal(index, event) {
+        event.stopPropagation();
+        let goals = getGoalsFromStorage();
+        goals.splice(index, 1);
+        localStorage.setItem("nz_goals", JSON.stringify(goals));
+        displayGoals();
+    }
+
+    function clearCompleted() {
+        let goals = getGoalsFromStorage();
+        localStorage.setItem("nz_goals", JSON.stringify(goals.filter(g => !g.completed)));
+        displayGoals();
+    }
+
+    function filterGoals(type) {
+        currentFilter = type;
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`tab-${type}`).classList.add('active');
+        displayGoals();
+    }
+
+    function exportData() {
+        let goals = localStorage.getItem("nz_goals");
+        if (!goals || goals === "[]") return;
+        let blob = new Blob([goals], { type: "application/json" });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "backup.json";
+        a.click();
+    }
+
+    function importData(event) {
+        let file = event.target.files[0];
+        if (!file) return;
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                let parsed = JSON.parse(e.target.result);
+                if (Array.isArray(parsed)) {
+                    localStorage.setItem("nz_goals", JSON.stringify(parsed));
+                    displayGoals();
+                }
+            } catch (err) {}
+        };
+        reader.readAsText(file);
+    }
+
+    function toggleTheme() {
+        let current = document.documentElement.getAttribute("data-theme");
+        let target = current === "light" ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", target);
+        localStorage.setItem("nz_theme", target);
+    }
+
+    function loadTheme() {
+        let saved = localStorage.getItem("nz_theme") || "dark";
+        document.documentElement.setAttribute("data-theme", saved);
+    }
+</script>
+</body>
+</html>
+
 
