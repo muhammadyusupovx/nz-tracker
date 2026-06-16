@@ -46,25 +46,25 @@
         h1 { color: var(--text-color); font-size: 22px; text-align: center; margin-bottom: 5px; padding-top: 15px; font-weight: 800; letter-spacing: 0.5px; }
         p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 13px; margin-bottom: 10px; font-weight: 500; }
         
-        /* Quote Box */
         .quote-box { background: rgba(49, 130, 206, 0.08); padding: 10px; border-radius: 10px; text-align: center; font-size: 11px; font-style: italic; color: var(--primary); margin-bottom: 15px; font-weight: 600; min-height: 34px; display: flex; align-items: center; justify-content: center; }
 
-        /* Progress Bar */
+        .dashboard { display: flex; justify-content: space-between; background: var(--li-bg); padding: 12px; border-radius: 15px; margin-bottom: 15px; border: 1px solid var(--input-border); }
+        .dash-item { text-align: center; flex: 1; }
+        .dash-item .num { font-size: 16px; font-weight: bold; color: var(--text-color); }
+        .dash-item .label { font-size: 10px; color: var(--subtitle-color); text-transform: uppercase; margin-top: 2px; }
+
         .progress-container { background: var(--input-border); border-radius: 10px; height: 8px; width: 100%; margin-bottom: 8px; overflow: hidden; }
         .progress-bar { background: var(--success); height: 100%; width: 0%; transition: width 0.4s ease; }
         .progress-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--subtitle-color); margin-bottom: 20px; font-weight: bold; }
         .clear-btn { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 12px; font-weight: bold; }
 
-        /* Search Box */
         .search-box { width: 100%; margin-bottom: 15px; }
         .search-box input { padding: 10px 15px; font-size: 14px; border-radius: 12px; border: 2px dashed var(--input-border); }
 
-        /* Input Section */
         .input-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; width: 100%; }
-        .row-inputs { display: flex; gap: 8px; }
-        .row-inputs select { flex: 1; padding: 12px; border-radius: 12px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); font-size: 14px; outline: none; font-weight: 600; }
-        input { width: 100%; padding: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 12px; font-size: 15px; outline: none; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(49, 130, 206, 0.2); }
+        .row-inputs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .row-inputs select, .row-inputs input[type="date"] { flex: 1; min-width: 100px; padding: 12px; border-radius: 12px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); font-size: 13px; outline: none; font-weight: 600; }
+        input[type="text"] { width: 100%; padding: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 12px; font-size: 15px; outline: none; }
         
         button.primary-btn { 
             background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; font-weight: bold; width: 100%;
@@ -72,34 +72,37 @@
         }
         button.primary-btn:active { transform: scale(0.97); }
         
-        /* Filter Tabs */
         .filter-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
         .filter-btn { flex: 1; padding: 8px; border: none; background: var(--input-border); color: var(--subtitle-color); border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 4px; }
         .filter-btn.active { background: var(--primary); color: white; }
         .count-badge { background: rgba(0,0,0,0.1); padding: 1px 5px; border-radius: 20px; font-size: 10px; }
         .filter-btn.active .count-badge { background: rgba(255,255,255,0.2); color: white; }
 
-        ul { list-style: none; max-height: 260px; overflow-y: auto; }
+        ul { list-style: none; max-height: 220px; overflow-y: auto; }
         ul::-webkit-scrollbar { width: 4px; }
         ul::-webkit-scrollbar-thumb { background: var(--input-border); border-radius: 10px; }
 
-        /* List Items */
         li { background: var(--li-bg); padding: 14px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); cursor: pointer; animation: fadeIn 0.3s ease; }
-        
         li.p-high { border-left-color: var(--danger); }
         li.p-medium { border-left-color: #ecc94b; }
         li.p-low { border-left-color: var(--primary); }
-
         li.completed { border-left-color: var(--success) !important; background: rgba(56, 161, 105, 0.1); opacity: 0.6; transform: scale(0.99); }
         li.completed .text { text-decoration: line-through; color: var(--subtitle-color); }
         
         .text-group { flex: 1; display: flex; flex-direction: column; gap: 4px; margin-right: 10px; }
         .text { font-size: 14px; color: var(--li-text); word-break: break-all; font-weight: 500; }
-        .badges { display: flex; gap: 5px; align-items: center; }
+        .badges { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
         .badge { font-size: 9px; background: var(--input-border); color: var(--subtitle-color); padding: 2px 6px; border-radius: 5px; font-weight: bold; text-transform: uppercase; }
         .badge.p-tag { background: rgba(229, 62, 62, 0.1); color: var(--danger); }
+        .badge.date-tag { background: rgba(49, 130, 206, 0.1); color: var(--primary); }
 
         button.delete-btn { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; white-space: nowrap; font-weight: bold; }
+
+        /* Backup panel */
+        .backup-section { display: flex; gap: 10px; margin-top: 20px; border-top: 1px solid var(--input-border); padding-top: 15px; justify-content: center; }
+        .backup-btn { background: var(--subtitle-color); color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .backup-btn:hover { opacity: 0.9; }
+        #fileInput { display: none; }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -112,6 +115,12 @@
     <p class="subtitle">3-Year Strategic Tracker</p>
 
     <div class="quote-box" id="quoteBox">"Loading inspiration..."</div>
+
+    <div class="dashboard">
+        <div class="dash-item"><div class="num" id="dash-total">0</div><div class="label">Total</div></div>
+        <div class="dash-item" style="border-left: 1px solid var(--input-border); border-right: 1px solid var(--input-border);"><div class="num" id="dash-active">0</div><div class="label">Active</div></div>
+        <div class="dash-item"><div class="num" id="dash-done">0</div><div class="label">Done</div></div>
+    </div>
 
     <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
     <div class="progress-row">
@@ -136,6 +145,7 @@
                 <option value="medium">Priority: Medium</option>
                 <option value="high">Priority: High 🔥</option>
             </select>
+            <input type="date" id="dateInput">
         </div>
         <button class="primary-btn" onclick="addGoal()">Add to Journey</button>
     </div>
@@ -147,13 +157,19 @@
     </div>
 
     <ul id="goalList"></ul>
+
+    <div class="backup-section">
+        <button class="backup-btn" onclick="exportData()">📥 Backup Data</button>
+        <button class="backup-btn" onclick="document.getElementById('fileInput').click()">📤 Restore Data</button>
+        <input type="file" id="fileInput" onchange="importData(event)" accept=".json">
+    </div>
 </div>
 
 <script>
     let currentFilter = 'all';
     
     const quotes = [
-        "Success is s journey, not a destination. Keep coding!",
+        "Success is a journey, not a destination. Keep coding!",
         "Your 3-year plan starts with what you do today.",
         "IELTS 8.0 is not a dream, it is a plan.",
         "Consistency beats talent. Never stop learning.",
@@ -176,10 +192,12 @@
         let input = document.getElementById("goalInput");
         let categorySelect = document.getElementById("categoryInput");
         let prioritySelect = document.getElementById("priorityInput");
+        let dateInput = document.getElementById("dateInput");
         
         let goalText = input.value.trim();
         let category = categorySelect.value;
         let priority = prioritySelect.value;
+        let dueDate = dateInput.value;
         
         if (goalText === "") {
             alert("Please enter a goal!");
@@ -187,10 +205,11 @@
         }
 
         let goals = getGoalsFromStorage();
-        goals.push({ text: goalText, completed: false, category: category, priority: priority });
+        goals.push({ text: goalText, completed: false, category: category, priority: priority, date: dueDate });
         localStorage.setItem("nz_goals", JSON.stringify(goals));
 
         input.value = "";
+        dateInput.value = "";
         updateQuote();
         displayGoals();
     }
@@ -201,20 +220,22 @@
         let goals = getGoalsFromStorage();
         let searchQuery = document.getElementById("searchInput").value.toLowerCase();
 
-        // Count Badges Update
-        document.getElementById("cnt-all").innerText = goals.length;
+        let total = goals.length;
+        let completedCount = goals.filter(g => g.completed).length;
+        let activeCount = total - completedCount;
+
+        document.getElementById("dash-total").innerText = total;
+        document.getElementById("dash-active").innerText = activeCount;
+        document.getElementById("dash-done").innerText = completedCount;
+
+        document.getElementById("cnt-all").innerText = total;
         document.getElementById("cnt-it").innerText = goals.filter(g => g.category === 'it').length;
         document.getElementById("cnt-ielts").innerText = goals.filter(g => g.category === 'ielts').length;
 
-        // Progress Calculation
-        let total = goals.length;
-        let completedCount = goals.filter(g => g.completed).length;
         let percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
-        
         document.getElementById("progressBar").style.width = percent + "%";
         document.getElementById("progressText").innerText = `${percent}% Completed (${completedCount}/${total})`;
 
-        // Filter and Search combined
         let filteredGoals = goals.filter(goal => {
             let matchesFilter = currentFilter === 'all' || goal.category === currentFilter;
             let matchesSearch = goal.text.toLowerCase().includes(searchQuery);
@@ -231,12 +252,14 @@
             li.setAttribute("onclick", `toggleGoal(${realIndex}, event)`);
 
             let priorityText = goal.priority === 'high' ? '🔥' : (goal.priority === 'medium' ? '⏳' : '✅');
+            let dateDisplay = goal.date ? `<span class="badge date-tag">📅 ${goal.date}</span>` : '';
 
             li.innerHTML = `
                 <div class="text-group">
                     <div class="badges">
                         <span class="badge">${goal.category}</span>
                         <span class="badge p-tag">${priorityText}</span>
+                        ${dateDisplay}
                     </div>
                     <span class="text">${goal.text}</span>
                 </div>
@@ -281,6 +304,41 @@
         return goals ? JSON.parse(goals) : [];
     }
 
+    /* Eksport va Import Tizimi */
+    function exportData() {
+        let goals = localStorage.getItem("nz_goals");
+        if (!goals || goals === "[]") {
+            alert("No data to backup!");
+            return;
+        }
+        let blob = new Blob([goals], { type: "application/json" });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "cwc_goals_backup.json";
+        a.click();
+    }
+
+    function importData(event) {
+        let file = event.target.files[0];
+        if (!file) return;
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                let importedGoals = JSON.parse(e.target.result);
+                if (Array.isArray(importedGoals)) {
+                    localStorage.setItem("nz_goals", JSON.stringify(importedGoals));
+                    displayGoals();
+                    alert("Data restored successfully!");
+                } else {
+                    alert("Invalid file format!");
+                }
+            } catch (err) {
+                alert("Error reading file!");
+            }
+        };
+        reader.readAsText(file);
+    }
+
     function toggleTheme() {
         let currentTheme = document.documentElement.getAttribute("data-theme");
         let targetTheme = currentTheme === "dark" ? "light" : "dark";
@@ -301,5 +359,6 @@
 
 </body>
 </html>
+
 
 
