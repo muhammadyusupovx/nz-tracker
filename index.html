@@ -13,6 +13,8 @@
             --input-border: #e2e8f0;
             --li-bg: #f7fafc;
             --li-text: #2d3748;
+            --primary: #3182ce;
+            --primary-hover: #2b6cb0;
         }
 
         [data-theme="dark"] {
@@ -38,133 +40,104 @@
             position: relative; 
         }
 
-        /* Login Ekran Sozlamalari */
-        .login-screen { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .login-screen h2 { color: var(--text-color); margin-bottom: 10px; font-size: 22px; }
-        .login-screen p { color: var(--subtitle-color); font-size: 14px; margin-bottom: 20px; }
-
-        /* Asosiy Tracker oynasi (boshida yashirin turadi) */
-        .tracker-screen { display: none; }
-        
         .theme-toggle { position: absolute; top: 15px; right: 15px; background: transparent; border: none; font-size: 20px; cursor: pointer; }
         
         h1 { color: var(--text-color); font-size: 22px; text-align: center; margin-bottom: 5px; padding-top: 15px; }
-        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 13px; margin-bottom: 20px; }
+        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 13px; margin-bottom: 15px; }
         
-        .input-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; width: 100%; }
-        
-        input { 
-            width: 100%; 
-            padding: 14px; 
-            border: 2px solid var(--input-border); 
-            background: var(--card-bg); 
-            color: var(--li-text); 
-            border-radius: 12px; 
-            font-size: 16px; 
-            outline: none; 
-            transition: 0.3s;
-        }
-        input:focus { border-color: #3182ce; box-shadow: 0 0 10px rgba(49, 130, 206, 0.2); }
+        /* Progress Bar Dizayni */
+        .progress-container { background: var(--input-border); border-radius: 10px; height: 8px; width: 100%; margin-bottom: 10px; overflow: hidden; }
+        .progress-bar { background: #38a169; height: 100%; width: 0%; transition: width 0.4s ease; }
+        .progress-text { font-size: 12px; color: var(--subtitle-color); text-align: right; margin-bottom: 20px; font-weight: bold; }
+
+        /* Kategoriya Tanlash (Tabs) */
+        .category-select { display: flex; gap: 5px; margin-bottom: 15px; width: 100%; }
+        .category-select select, .category-filter button { padding: 10px; border-radius: 10px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); font-size: 14px; outline: none; }
+        .category-select select { flex: 1; }
+
+        /* Filtr Tugmalari */
+        .filter-tabs { display: flex; gap: 5px; margin-bottom: 20px; }
+        .filter-btn { flex: 1; padding: 8px; border: none; background: var(--input-border); color: var(--subtitle-color); border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; }
+        .filter-btn.active { background: var(--primary); color: white; }
+
+        .input-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; width: 100%; }
+        input { width: 100%; padding: 14px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 12px; font-size: 15px; outline: none; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(49, 130, 206, 0.2); }
         
         button.primary-btn { 
-            background: #3182ce; 
-            color: white; 
-            border: none; 
-            padding: 14px; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            width: 100%;
-            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
-            transition: 0.2s;
+            background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; font-weight: bold; width: 100%;
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3); transition: 0.2s;
         }
-        button.primary-btn:active { transform: scale(0.98); }
+        button.primary-btn:active { transform: scale(0.97); }
         
-        ul { list-style: none; }
-        li { background: var(--li-bg); padding: 14px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; cursor: pointer; }
-        li.completed { border-left-color: #38a169; background: rgba(56, 161, 105, 0.15); opacity: 0.7; }
+        ul { list-style: none; max-height: 250px; overflow-y: auto; padding-right: 2px; }
+        ul::-webkit-scrollbar { width: 4px; }
+        ul::-webkit-scrollbar-thumb { background: var(--input-border); border-radius: 10px; }
+
+        li { background: var(--li-bg); padding: 14px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); cursor: pointer; animation: fadeIn 0.3s ease; }
+        li.completed { border-left-color: #38a169; background: rgba(56, 161, 105, 0.1); opacity: 0.7; }
         li.completed .text { text-decoration: line-through; color: var(--subtitle-color); }
-        .text { font-size: 15px; color: var(--li-text); flex: 1; margin-right: 10px; word-break: break-all; }
         
-        button.delete-btn { background: #e53e3e; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+        .text { font-size: 14px; color: var(--li-text); flex: 1; margin-right: 10px; word-break: break-all; }
+        .badge { font-size: 10px; background: var(--input-border); color: var(--subtitle-color); padding: 3px 6px; border-radius: 5px; margin-right: 8px; font-weight: bold; text-transform: uppercase; }
+
+        button.delete-btn { background: #e53e3e; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; white-space: nowrap; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="app-container">
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <h1>NZ Tracker Pro 🇳🇿</h1>
+    <p class="subtitle">3 yillik IT va IELTS strategiyasi</p>
 
-    <div id="loginScreen" class="login-screen">
-        <h2>Xush kelibsiz! 👋</h2>
-        <p>Ilovaga kirish uchun ismingizni kiriting</p>
-        <div class="input-section">
-            <input type="text" id="usernameInput" placeholder="Ismingizni yozing...">
-            <button class="primary-btn" onclick="login()">Tizimga kirish</button>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-text" id="progressText">0% bajarildi</div>
+
+    <div class="input-section">
+        <div class="category-select">
+            <input type="text" id="goalInput" placeholder="Yangi strategik maqsad...">
+            <select id="categoryInput">
+                <option value="it">IT 💻</option>
+                <option value="ielts">IELTS 📚</option>
+                <option value="shaxsiy">Shaxsiy 🌱</option>
+            </select>
         </div>
+        <button class="primary-btn" onclick="addGoal()">Ro'yxatga qo'shish</button>
     </div>
 
-    <div id="trackerScreen" class="tracker-screen">
-        <h1 id="welcomeTitle">NZ Student Tracker 🇳🇿</h1>
-        <p class="subtitle">IELTS va IT maqsadlaringiz ro'yxati</p>
-
-        <div class="input-section">
-            <input type="text" id="goalInput" placeholder="Yangi maqsad yozing...">
-            <button class="primary-btn" onclick="addGoal()">Maqsadni qo'shish</button>
-        </div>
-
-        <ul id="goalList"></ul>
+    <div class="filter-tabs">
+        <button class="filter-btn active" id="tab-all" onclick="filterGoals('all')">Hammasi</button>
+        <button class="filter-btn" id="tab-it" onclick="filterGoals('it')">IT</button>
+        <button class="filter-btn" id="tab-ielts" onclick="filterGoals('ielts')">IELTS</button>
     </div>
+
+    <ul id="goalList"></ul>
 </div>
 
 <script>
+    let currentFilter = 'all';
+
     document.addEventListener("DOMContentLoaded", () => {
-        checkAuth();
+        displayGoals();
         loadTheme();
     });
 
-    // Login funksiyasi
-    function login() {
-        let nameInput = document.getElementById("usernameInput");
-        let name = nameInput.value.trim();
-
-        if (name === "") {
-            alert("Iltimos, ismingizni kiriting!");
-            return;
-        }
-
-        localStorage.setItem("nz_user", name);
-        checkAuth();
-    }
-
-    // Tizimga kirgan yoki kirmaganini tekshirish
-    function checkAuth() {
-        let savedUser = localStorage.getItem("nz_user");
-        let loginScreen = document.getElementById("loginScreen");
-        let trackerScreen = document.getElementById("trackerScreen");
-
-        if (savedUser) {
-            loginScreen.style.display = "none";
-            trackerScreen.style.display = "block";
-            document.getElementById("welcomeTitle").innerText = `${savedUser} ning ro'yxati 🇳🇿`;
-            displayGoals();
-        } else {
-            loginScreen.style.display = "flex";
-            trackerScreen.style.display = "none";
-        }
-    }
-
     function addGoal() {
         let input = document.getElementById("goalInput");
+        let categorySelect = document.getElementById("categoryInput");
         let goalText = input.value.trim();
+        let category = categorySelect.value;
         
         if (goalText === "") {
-            alert("Iltimos, maqsadni kiriting!");
+            alert("Maqsadni kiriting!");
             return;
         }
 
         let goals = getGoalsFromStorage();
-        goals.push({ text: goalText, completed: false });
+        goals.push({ text: goalText, completed: false, category: category });
         localStorage.setItem("nz_goals", JSON.stringify(goals));
 
         input.value = "";
@@ -176,15 +149,30 @@
         list.innerHTML = "";
         let goals = getGoalsFromStorage();
 
-        goals.forEach((goal, index) => {
+        // Statistika hisoblash
+        let total = goals.length;
+        let completedCount = goals.filter(g => g.completed).length;
+        let percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+        
+        document.getElementById("progressBar").style.width = percent + "%";
+        document.getElementById("progressText").innerText = `${percent}% bajarildi (${completedCount}/${total})`;
+
+        // Filtr bo'yicha saralash
+        let filteredGoals = goals.filter(goal => currentFilter === 'all' || goal.category === currentFilter);
+
+        filteredGoals.forEach((goal, originalIndex) => {
+            // Haqiqiy indeksni saqlab qolamiz
+            let realIndex = goals.findIndex(g => g.text === goal.text && g.category === goal.category);
+
             let li = document.createElement("li");
             if (goal.completed) li.classList.add("completed");
 
-            li.setAttribute("onclick", `toggleGoal(${index}, event)`);
+            li.setAttribute("onclick", `toggleGoal(${realIndex}, event)`);
 
             li.innerHTML = `
+                <span class="badge">${goal.category}</span>
                 <span class="text">${goal.text}</span>
-                <button class="delete-btn" onclick="deleteGoal(${index}, event)">O'chirish</button>
+                <button class="delete-btn" onclick="deleteGoal(${realIndex}, event)">O'chirish</button>
             `;
             list.appendChild(li);
         });
@@ -192,7 +180,6 @@
 
     function toggleGoal(index, event) {
         if (event.target.tagName === 'BUTTON') return;
-
         let goals = getGoalsFromStorage();
         goals[index].completed = !goals[index].completed;
         localStorage.setItem("nz_goals", JSON.stringify(goals));
@@ -207,6 +194,13 @@
         displayGoals();
     }
 
+    function filterGoals(type) {
+        currentFilter = type;
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`tab-${type}`).classList.add('active');
+        displayGoals();
+    }
+
     function getGoalsFromStorage() {
         let goals = localStorage.getItem("nz_goals");
         return goals ? JSON.parse(goals) : [];
@@ -214,30 +208,23 @@
 
     function toggleTheme() {
         let currentTheme = document.documentElement.getAttribute("data-theme");
-        let targetTheme = "light";
+        let targetTheme = currentTheme === "dark" ? "light" : "dark";
         let toggleBtn = document.querySelector(".theme-toggle");
-
-        if (currentTheme !== "dark") {
-            targetTheme = "dark";
-            toggleBtn.innerText = "☀️";
-        } else {
-            toggleBtn.innerText = "🌙";
-        }
-
+        toggleBtn.innerText = targetTheme === "dark" ? "☀️" : "🌙";
         document.documentElement.setAttribute("data-theme", targetTheme);
         localStorage.setItem("nz_theme", targetTheme);
     }
 
     function loadTheme() {
         let savedTheme = localStorage.getItem("nz_theme");
-        let toggleBtn = document.querySelector(".theme-toggle");
         if (savedTheme === "dark") {
             document.documentElement.setAttribute("data-theme", "dark");
-            toggleBtn.innerText = "☀️";
+            document.querySelector(".theme-toggle").innerText = "☀️";
         }
     }
 </script>
 
 </body>
 </html>
+
 
