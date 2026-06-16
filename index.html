@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NZ Student Tracker</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .app-container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { color: #1a365d; font-size: 24px; text-align: center; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #718096; font-size: 14px; margin-bottom: 20px; }
+        .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; }
+        input:focus { border-color: #3182ce; }
+        button { background: #3182ce; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:active { transform: scale(0.98); }
+        ul { list-style: none; }
+        li { background: #f7fafc; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; animation: fadeIn 0.3s ease; }
+        .delete-btn { background: #e53e3e; padding: 6px 12px; font-size: 12px; border-radius: 6px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <h1>NZ Student Tracker 🇳🇿</h1>
+    <p class="subtitle">IELTS va IT maqsadlaringiz ro'yxati</p>
+    
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Yangi maqsad qo'shing...">
+        <button onclick="addTask()">Qo'shish</button>
+    </div>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    function addTask() {
+        const input = document.getElementById('taskInput');
+        const taskText = input.value.trim();
+        
+        if (taskText === '') {
+            alert('Iltimos, biror narsa yozing!');
+            return;
+        }
+
+        const ul = document.getElementById('taskList');
+        const li = document.createElement('li');
+        
+        li.innerHTML = `
+            <span>${taskText}</span>
+            <button class="delete-btn" onclick="deleteTask(this)">O'chirish</button>
+        `;
+        
+        ul.appendChild(li);
+        input.value = ''; // Inputni tozalash
+    }
+
+    function deleteTask(btn) {
+        const li = btn.parentElement;
+        li.remove();
+    }
+</script>
+
+</body>
+</html>
