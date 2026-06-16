@@ -11,14 +11,17 @@
         h1 { color: #1a365d; font-size: 24px; text-align: center; margin-bottom: 5px; }
         p.subtitle { text-align: center; color: #718096; font-size: 14px; margin-bottom: 20px; }
         .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
-        input { flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; }
+        input { flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; transition: 0.3s; }
         input:focus { border-color: #3182ce; }
-        button { background: #3182ce; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: bold; }
-        button:active { transform: scale(0.98); }
+        button.add-btn { background: #3182ce; color: white; border: none; padding: 0 20px; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+        button.add-btn:hover { background: #2b6cb0; }
         ul { list-style: none; }
-        li { background: #f7fafc; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; animation: fadeIn 0.3s ease; }
-        .delete-btn { background: #e53e3e; padding: 6px 12px; font-size: 12px; border-radius: 6px; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        li { background: #f7fafc; padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; transition: 0.3s; cursor: pointer; }
+        li.completed { border-left-color: #38a169; background: #f0fff4; opacity: 0.7; }
+        li.completed .text { text-decoration: line-through; color: #a0aec0; }
+        .text { font-size: 16px; color: #2d3748; flex: 1; margin-right: 10px; }
+        button.delete-btn { background: #e53e3e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.3s; }
+        button.delete-btn:hover { background: #c53030; }
     </style>
 </head>
 <body>
@@ -26,42 +29,84 @@
 <div class="app-container">
     <h1>NZ Student Tracker 🇳🇿</h1>
     <p class="subtitle">IELTS va IT maqsadlaringiz ro'yxati</p>
-    
+
     <div class="input-section">
-        <input type="text" id="taskInput" placeholder="Yangi maqsad qo'shing...">
-        <button onclick="addTask()">Qo'shish</button>
+        <input type="text" id="goalInput" placeholder="Yangi maqsad qo'shing...">
+        <button class="add-btn" onclick="addGoal()">Qo'shish</button>
     </div>
 
-    <ul id="taskList"></ul>
+    <ul id="goalList"></ul>
 </div>
 
 <script>
-    function addTask() {
-        const input = document.getElementById('taskInput');
-        const taskText = input.value.trim();
+    // Sahifa yuklanganda xotiradan ma'lumotlarni o'qish
+    document.addEventListener("DOMContentLoaded", loadGoals);
+
+    function addGoal() {
+        let input = document.getElementById("goalInput");
+        let goalText = input.value.trim();
         
-        if (taskText === '') {
-            alert('Iltimos, biror narsa yozing!');
+        if (goalText === "") {
+            alert("Iltimos, maqsadni kiriting!");
             return;
         }
 
-        const ul = document.getElementById('taskList');
-        const li = document.createElement('li');
-        
-        li.innerHTML = `
-            <span>${taskText}</span>
-            <button class="delete-btn" onclick="deleteTask(this)">O'chirish</button>
-        `;
-        
-        ul.appendChild(li);
-        input.value = ''; // Inputni tozalash
+        let goals = getGoalsFromStorage();
+        goals.push({ text: goalText, completed: false });
+        localStorage.setItem("nz_goals", JSON.stringify(goals));
+
+        input.value = "";
+        displayGoals();
     }
 
-    function deleteTask(btn) {
-        const li = btn.parentElement;
-        li.remove();
+    function displayGoals() {
+        let list = document.getElementById("goalList");
+        list.innerHTML = "";
+        let goals = getGoalsFromStorage();
+
+        goals.forEach((goal, index) => {
+            let li = document.createElement("li");
+            if (goal.completed) li.classList.add("completed");
+
+            // Maqsad ustiga bosganda bajarilgan deb belgilash
+            li.setAttribute("onclick", `toggleGoal(${index}, event)`);
+
+            li.innerHTML = `
+                <span class="text">${goal.text}</span>
+                <button class="delete-btn" onclick="deleteGoal(${index}, event)">O'chirish</button>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    function toggleGoal(index, event) {
+        // Agar o'chirish tugmasi bosilgan bo'lsa, bajarildi deb belgilama
+        if (event.target.tagName === 'BUTTON') return;
+
+        let goals = getGoalsFromStorage();
+        goals[index].completed = !goals[index].completed;
+        localStorage.setItem("nz_goals", JSON.stringify(goals));
+        displayGoals();
+    }
+
+    function deleteGoal(index, event) {
+        event.stopPropagation(); // Li bosilib ketishining oldini oladi
+        let goals = getGoalsFromStorage();
+        goals.splice(index, 1);
+        localStorage.setItem("nz_goals", JSON.stringify(goals));
+        displayGoals();
+    }
+
+    function getGoalsFromStorage() {
+        let goals = localStorage.getItem("nz_goals");
+        return goals ? JSON.parse(goals) : [];
+    }
+
+    function loadGoals() {
+        displayGoals();
     }
 </script>
 
 </body>
 </html>
+
