@@ -5,21 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NZ Student Tracker</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .app-container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h1 { color: #1a365d; font-size: 24px; text-align: center; margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #718096; font-size: 14px; margin-bottom: 20px; }
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: white;
+            --text-color: #1a365d;
+            --subtitle-color: #718096;
+            --input-border: #e2e8f0;
+            --li-bg: #f7fafc;
+            --li-text: #2d3748;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a202c;
+            --card-bg: #2d3748;
+            --text-color: #f7fafc;
+            --subtitle-color: #a0aec0;
+            --input-border: #4a5568;
+            --li-bg: #4a5568;
+            --li-text: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background: var(--bg-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .app-container { background: var(--card-bg); width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
+        
+        /* Dark Mode Tugmasi */
+        .theme-toggle { position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 20px; cursor: pointer; }
+        
+        h1 { color: var(--text-color); font-size: 24px; text-align: center; margin-bottom: 5px; padding-top: 10px; }
+        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 14px; margin-bottom: 20px; }
         .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
-        input { flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; transition: 0.3s; }
+        input { flex: 1; padding: 12px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 10px; font-size: 16px; outline: none; transition: 0.3s; }
         input:focus { border-color: #3182ce; }
         button.add-btn { background: #3182ce; color: white; border: none; padding: 0 20px; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s; font-weight: bold; }
         button.add-btn:hover { background: #2b6cb0; }
         ul { list-style: none; }
-        li { background: #f7fafc; padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; transition: 0.3s; cursor: pointer; }
-        li.completed { border-left-color: #38a169; background: #f0fff4; opacity: 0.7; }
-        li.completed .text { text-decoration: line-through; color: #a0aec0; }
-        .text { font-size: 16px; color: #2d3748; flex: 1; margin-right: 10px; }
+        li { background: var(--li-bg); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; cursor: pointer; }
+        li.completed { border-left-color: #38a169; background: rgba(56, 161, 105, 0.15); opacity: 0.7; }
+        li.completed .text { text-decoration: line-through; color: var(--subtitle-color); }
+        .text { font-size: 16px; color: var(--li-text); flex: 1; margin-right: 10px; }
         button.delete-btn { background: #e53e3e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.3s; }
         button.delete-btn:hover { background: #c53030; }
     </style>
@@ -27,6 +51,8 @@
 <body>
 
 <div class="app-container">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
     <h1>NZ Student Tracker 🇳🇿</h1>
     <p class="subtitle">IELTS va IT maqsadlaringiz ro'yxati</p>
 
@@ -39,8 +65,10 @@
 </div>
 
 <script>
-    // Sahifa yuklanganda xotiradan ma'lumotlarni o'qish
-    document.addEventListener("DOMContentLoaded", loadGoals);
+    document.addEventListener("DOMContentLoaded", () => {
+        loadGoals();
+        loadTheme();
+    });
 
     function addGoal() {
         let input = document.getElementById("goalInput");
@@ -68,7 +96,6 @@
             let li = document.createElement("li");
             if (goal.completed) li.classList.add("completed");
 
-            // Maqsad ustiga bosganda bajarilgan deb belgilash
             li.setAttribute("onclick", `toggleGoal(${index}, event)`);
 
             li.innerHTML = `
@@ -80,7 +107,6 @@
     }
 
     function toggleGoal(index, event) {
-        // Agar o'chirish tugmasi bosilgan bo'lsa, bajarildi deb belgilama
         if (event.target.tagName === 'BUTTON') return;
 
         let goals = getGoalsFromStorage();
@@ -90,7 +116,7 @@
     }
 
     function deleteGoal(index, event) {
-        event.stopPropagation(); // Li bosilib ketishining oldini oladi
+        event.stopPropagation();
         let goals = getGoalsFromStorage();
         goals.splice(index, 1);
         localStorage.setItem("nz_goals", JSON.stringify(goals));
@@ -105,8 +131,33 @@
     function loadGoals() {
         displayGoals();
     }
+
+    /* Tungi rejim funksiyalari */
+    function toggleTheme() {
+        let currentTheme = document.documentElement.getAttribute("data-theme");
+        let targetTheme = "light";
+        let toggleBtn = document.querySelector(".theme-toggle");
+
+        if (currentTheme !== "dark") {
+            targetTheme = "dark";
+            toggleBtn.innerText = "☀️";
+        } else {
+            toggleBtn.innerText = "🌙";
+        }
+
+        document.documentElement.setAttribute("data-theme", targetTheme);
+        localStorage.setItem("nz_theme", targetTheme);
+    }
+
+    function loadTheme() {
+        let savedTheme = localStorage.getItem("nz_theme");
+        let toggleBtn = document.querySelector(".theme-toggle");
+        if (savedTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            toggleBtn.innerText = "☀️";
+        }
+    }
 </script>
 
 </body>
 </html>
-
