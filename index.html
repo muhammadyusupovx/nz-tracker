@@ -26,39 +26,74 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background 0.3s, color 0.3s; }
-        body { background: var(--bg-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .app-container { background: var(--card-bg); width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
+        body { background: var(--bg-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
         
-        /* Dark Mode Tugmasi */
-        .theme-toggle { position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 20px; cursor: pointer; }
+        .app-container { 
+            background: var(--card-bg); 
+            width: 100%; 
+            max-width: 360px; 
+            padding: 20px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            position: relative; 
+        }
         
-        h1 { color: var(--text-color); font-size: 24px; text-align: center; margin-bottom: 5px; padding-top: 10px; }
-        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 14px; margin-bottom: 20px; }
-        .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
-        input { flex: 1; padding: 12px; border: 2px solid var(--input-border); background: var(--card-bg); color: var(--li-text); border-radius: 10px; font-size: 16px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #3182ce; }
-        button.add-btn { background: #3182ce; color: white; border: none; padding: 0 20px; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s; font-weight: bold; }
-        button.add-btn:hover { background: #2b6cb0; }
+        .theme-toggle { position: absolute; top: 15px; right: 15px; background: transparent; border: none; font-size: 20px; cursor: pointer; }
+        
+        h1 { color: var(--text-color); font-size: 22px; text-align: center; margin-bottom: 5px; padding-top: 15px; }
+        p.subtitle { text-align: center; color: var(--subtitle-color); font-size: 13px; margin-bottom: 20px; }
+        
+        /* Blok element qildik: Input tepada, Tugma pastda turadi */
+        .input-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; width: 100%; }
+        
+        input { 
+            width: 100%; 
+            padding: 14px; 
+            border: 2px solid var(--input-border); 
+            background: var(--card-bg); 
+            color: var(--li-text); 
+            border-radius: 12px; 
+            font-size: 16px; 
+            outline: none; 
+            transition: 0.3s;
+        }
+        input:focus { border-color: #3182ce; box-shadow: 0 0 10px rgba(49, 130, 206, 0.2); }
+        
+        /* Tugma endi pastda va to'liq kenglikda */
+        button.add-btn { 
+            background: #3182ce; 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+            transition: 0.2s;
+        }
+        button.add-btn:active { transform: scale(0.98); }
+        
         ul { list-style: none; }
-        li { background: var(--li-bg); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; cursor: pointer; }
+        li { background: var(--li-bg); padding: 14px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #3182ce; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         li.completed { border-left-color: #38a169; background: rgba(56, 161, 105, 0.15); opacity: 0.7; }
         li.completed .text { text-decoration: line-through; color: var(--subtitle-color); }
-        .text { font-size: 16px; color: var(--li-text); flex: 1; margin-right: 10px; }
-        button.delete-btn { background: #e53e3e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.3s; }
-        button.delete-btn:hover { background: #c53030; }
+        .text { font-size: 15px; color: var(--li-text); flex: 1; margin-right: 10px; word-break: break-all; }
+        
+        button.delete-btn { background: #e53e3e; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; white-space: nowrap; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-
     <h1>NZ Student Tracker 🇳🇿</h1>
     <p class="subtitle">IELTS va IT maqsadlaringiz ro'yxati</p>
 
     <div class="input-section">
-        <input type="text" id="goalInput" placeholder="Yangi maqsad qo'shing...">
-        <button class="add-btn" onclick="addGoal()">Qo'shish</button>
+        <input type="text" id="goalInput" placeholder="Yangi maqsad yozing...">
+        <button class="add-btn" onclick="addGoal()">Maqsadni qo'shish</button>
     </div>
 
     <ul id="goalList"></ul>
@@ -132,7 +167,6 @@
         displayGoals();
     }
 
-    /* Tungi rejim funksiyalari */
     function toggleTheme() {
         let currentTheme = document.documentElement.getAttribute("data-theme");
         let targetTheme = "light";
@@ -161,3 +195,4 @@
 
 </body>
 </html>
+
